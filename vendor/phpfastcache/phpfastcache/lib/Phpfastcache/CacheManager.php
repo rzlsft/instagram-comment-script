@@ -193,7 +193,7 @@ class CacheManager
                 throw new PhpfastcacheDriverNotFoundException(sprintf('The driver "%s" does not exists', $driver));
             }
         } else {
-            if (self::$badPracticeOmeter[$driver] >= 2) {
+            if (self::$badPracticeOmeter[$driver] >= 1000) {
                 \trigger_error(
                     '[' . $driver . '] Calling many times CacheManager::getInstance() for already instanced drivers is a bad practice and have a significant impact on performances.
            See https://github.com/PHPSocialNetwork/phpfastcache/wiki/[V5]-Why-calling-getInstance%28%29-each-time-is-a-bad-practice-%3F'

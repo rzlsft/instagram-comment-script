@@ -59,7 +59,13 @@ $dosya = fopen('userler.txt', 'r');
 $icerik = fread($dosya, filesize('userler.txt'));
 $donusturme=explode("-",$icerik);
 $sayi=count($donusturme)-2;
-$random=rand(0,$sayi);
+
+
+
+$shortCode=explode("/", $media);
+$mediaId=convert("$shortCode[4]");
+for ($i=0; $i <$adet ; $i++) { 
+	$random=rand(0,$sayi);
 $veri=$donusturme[$random];
 $parcala=explode(",",$veri);
 $username = str_replace("[", "", $parcala[0]);
@@ -74,11 +80,6 @@ if (@$parcala[2]) {
 	$instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(), $username, $password, new Psr16Adapter('Files'));
 	$login=$instagram->login();
 }
-
-
-$shortCode=explode("/", $media);
-$mediaId=convert("$shortCode[4]");
-for ($i=0; $i <$adet ; $i++) { 
 	switch ($_POST['random']) {
 		case 0:
 			
