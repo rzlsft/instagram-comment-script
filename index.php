@@ -134,6 +134,21 @@ body {
       <label  class="form-label">Yorumlar Arası bekleme saniyesi</label>
      <input name="delay" type="text"class="form-control">
     </div>
+
+    <div class="mb-3">
+      <label  class="form-label">Yorumunun Sonuna Random Koy</label>
+     <select name="random" class="form-select">
+       <option value="0" class="form-option">Koyma</option>
+       <option value="1" class="form-option">Sayı koy (orn: #165489)</option>
+       <option value="2" class="form-option">Yazı koy (orn: #afdg3s)</option>
+     </select>
+    </div>
+
+
+    <?php 
+   
+
+     ?>
    
    <div align="center">
    	<div id="loader2" style="color: #6f42c1!important;" class="spinner-border" role="status">
