@@ -14,7 +14,6 @@ function convert($var){
 	$url_prefix = 'https://www.instagram.com/p/';
 	$url_suffix = '';
 	$media_id   = 0;
-
 	if (preg_match('/_/', $var)) {
 		$parts      = explode('_', $var);
 		$media_id   = $parts[0];
@@ -43,18 +42,11 @@ function convert($var){
 		return $media_id;
 	}
 }
-
 if (@!empty($_POST['media'])) {
-
 	extract($_POST);
-
-
-	
-
 	if (@!empty($media)) {
 		if (@!empty($adet)) {
 			if (@!empty($text)) {
-
 				$dosya = fopen('userler.txt', 'r');
 				$icerik = fread($dosya, filesize('userler.txt'));
 				$donusturme=explode("-",$icerik);
@@ -64,8 +56,6 @@ if (@!empty($_POST['media'])) {
 				$parcala=explode(",",$veri);
 				$username = str_replace("[", "", $parcala[0]);
 				$password = str_replace("]", "", $parcala[1]);
-
-
 				if (@$parcala[2]) {
 					$proxyTam = str_replace("]", "", $parcala[2]);
 					$instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(['proxy' => $proxyTam]),$username, $password, new Psr16Adapter('Files'));
@@ -74,15 +64,12 @@ if (@!empty($_POST['media'])) {
 					$instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(), $username, $password, new Psr16Adapter('Files'));
 					$login=$instagram->login();
 				}
-
-
 				$shortCode=explode("/", $media);
 				$mediaId=convert("$shortCode[4]");
 				for ($i=0; $i <$adet ; $i++) { 
 					$addComment = $instagram->addComment($mediaId,$text);
 					sleep($delay);
 				}
-
 				if ($addComment == "basarili") {
 					$data['durum']="basarili";
 					$data['message']="Yorumlar Gönderildi";
@@ -96,7 +83,6 @@ if (@!empty($_POST['media'])) {
 					$data['message']="Hata, Tekrar Deneyiniz";
 					print_r(json_encode($data));
 				}
-
 			}else{
 
 				$data['durum']="hata";
@@ -117,14 +103,10 @@ if (@!empty($_POST['media'])) {
 	}
 
 }
-
 if (@!empty($_POST['username'])) {
 	extract($_POST);
-	
-	
 	if (!empty($username)) {
 		if (!empty($password)) {
-
 			if ($proxy) {
 				$instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(['proxy' => $proxy]), $username, $password, new Psr16Adapter('Files'));
 				$login=$instagram->login();
@@ -132,8 +114,6 @@ if (@!empty($_POST['username'])) {
 				$instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(), $username, $password, new Psr16Adapter('Files'));
 				$login=$instagram->login();
 			}
-
-			
 			if ($login == "hata") {
 				$data['durum']="hata";
 				$data['message']="Kullanıcı adınızı veya şifrenizi kontrol ediniz.";
@@ -146,16 +126,11 @@ if (@!empty($_POST['username'])) {
 				print_r(json_encode($data));
 			}else
 			{
-
-
-
 				$file = 'userler.txt';
 				$find = "[".$_POST['username'].",".$_POST['password']."]";
 				$contents = file_get_contents($file);
 				$pattern = preg_quote($find, '/');
 				$pattern = "/^.*$pattern.*$/m";
-
-
 				if(preg_match_all($pattern, $contents, $matches)){
 
 					$data['durum']="basarili";
@@ -172,30 +147,18 @@ if (@!empty($_POST['username'])) {
 					fwrite ( $dosya , $yaz ) ;
 					fclose ($dosya);
 				} 
-
-
-
-
 			}
 
 		}else{
-
 			$data['durum']="hata";
 			$data['message']="Lütfen Boş Alan Bırakmayınız";
 			print_r(json_encode($data));
 		}
-
 	}else{
 
 		$data['durum']="hata";
 		$data['message']="Lütfen Boş Alan Bırakmayınız";
 		print_r(json_encode($data));
 	}
-
-
-
 }
-
-
-
 ?>
