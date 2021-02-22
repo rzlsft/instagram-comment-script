@@ -2,8 +2,6 @@
 require __DIR__ . '/vendor/autoload.php';
 use Phpfastcache\Helper\Psr16Adapter;
 
-
-//$account = $instagram->addComment(2514173849476925810, 'Deneme');
 function convert($var){
     $alphabet   = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
     $url_prefix = 'https://www.instagram.com/p/';
