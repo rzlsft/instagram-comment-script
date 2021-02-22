@@ -61,7 +61,7 @@ $password = str_replace("]", "", $parcala[1]);
 
 if (@$parcala[2]) {
 	$proxyTam = str_replace("]", "", $parcala[2]);
-	$instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(['proxy' => $proxyTam]), '53', '', new Psr16Adapter('Files'));
+	$instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(['proxy' => $proxyTam]),$username, $password, new Psr16Adapter('Files'));
 	$login=$instagram->login();
 }else{
 	$instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(), $username, $password, new Psr16Adapter('Files'));
@@ -119,7 +119,7 @@ if (@!empty($_POST['username'])) {
 		if (!empty($password)) {
 
 if ($proxy) {
-	$instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(['proxy' => $proxy]), '53', '', new Psr16Adapter('Files'));
+	$instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(['proxy' => $proxy]), $username, $password, new Psr16Adapter('Files'));
 	$login=$instagram->login();
 }else{
 	$instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(), $username, $password, new Psr16Adapter('Files'));
