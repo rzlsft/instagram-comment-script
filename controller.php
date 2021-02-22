@@ -1,7 +1,7 @@
 <?php 
 require __DIR__ . '/vendor/autoload.php';
 use Phpfastcache\Helper\Psr16Adapter;
-
+error_reporting(0);
 function convert($var){
     $alphabet   = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
     $url_prefix = 'https://www.instagram.com/p/';
@@ -58,12 +58,22 @@ $parcala=explode(",",$veri);
 $username = str_replace("[", "", $parcala[0]);
 $password = str_replace("]", "", $parcala[1]);
 
-$instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(), $username, $password, new Psr16Adapter('Files'));
-$login=$instagram->login();
+
+if (@$parcala[2]) {
+	$proxyTam = str_replace("]", "", $parcala[2]);
+	$instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(['proxy' => $proxyTam]), 'tunahanclk53', 'Tunahan77', new Psr16Adapter('Files'));
+	$login=$instagram->login();
+}else{
+	$instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(), $username, $password, new Psr16Adapter('Files'));
+	$login=$instagram->login();
+}
+
+
 $shortCode=explode("/", $media);
 $mediaId=convert("$shortCode[4]");
 for ($i=0; $i <$adet ; $i++) { 
 	$addComment = $instagram->addComment($mediaId,$text);
+	sleep($delay);
 }
 
 if ($addComment == "basarili") {
@@ -107,13 +117,28 @@ if (@!empty($_POST['username'])) {
 	
 	if (!empty($username)) {
 		if (!empty($password)) {
+
+if ($proxy) {
+	$instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(['proxy' => $proxy]), 'tunahanclk53', 'Tunahan77', new Psr16Adapter('Files'));
+	$login=$instagram->login();
+}else{
 	$instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(), $username, $password, new Psr16Adapter('Files'));
 	$login=$instagram->login();
+}
+
+	
 	if ($login == "hata") {
 			$data['durum']="hata";
 	$data['message']="Kullanıcı adınızı veya şifrenizi kontrol ediniz.";
 		print_r(json_encode($data));
-	}else{
+	}else if($login =="proxyHata")
+{
+
+	$data['durum']="hata";
+	$data['message']="Proxy kontrol Ediniz";
+		print_r(json_encode($data));
+}else
+	{
 
 
 
@@ -135,7 +160,7 @@ $data['durum']="basarili";
 	$data['message']="Başarılı User eklenmiştir";
 		print_r(json_encode($data));
 $dosya = fopen ("userler.txt" , 'a'); //dosya oluşturma işlemi
-$yaz="[".$_POST['username'].",".$_POST['password']."]-";
+$yaz="[".$_POST['username'].",".$_POST['password'].",".$proxy."]-";
  //dosya içine ne yazmak istiyorsanız buraya yazın. $değer
 fwrite ( $dosya , $yaz ) ;
 fclose ($dosya);

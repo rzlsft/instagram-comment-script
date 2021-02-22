@@ -1785,7 +1785,10 @@ class Instagram
         if ($force || !$this->isLoggedIn($session)) {
             $response = Request::get(Endpoints::BASE_URL);
             if ($response->code !== static::HTTP_OK) {
-                throw new InstagramException('Response code is ' . $response->code . '. Body: ' . static::getErrorBody($response->body) . ' Something went wrong. Please report issue.', $response->code);
+              $data['durum']="hata";
+    $data['message']="Proxy kontrol Ediniz veya hesabınız engellere takıldı lütfen daha sonra tekrar deneyiniz.";
+        print_r(json_encode($data));
+                exit();
             }
             preg_match('/"csrf_token":"(.*?)"/', $response->body, $match);
             $csrfToken = isset($match[1]) ? $match[1] : '';

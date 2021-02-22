@@ -129,6 +129,11 @@ body {
       <label  class="form-label">Kaç Adet</label>
      <input name="adet" type="text"class="form-control">
     </div>
+
+     <div class="mb-3">
+      <label  class="form-label">Yorumlar Arası bekleme saniyesi</label>
+     <input name="delay" type="text"class="form-control">
+    </div>
    
    <div align="center">
    	<div id="loader2" style="color: #6f42c1!important;" class="spinner-border" role="status">
@@ -154,6 +159,11 @@ body {
       <label  class="form-label">Password</label>
      <input name="password" type="text" class="form-control">
     </div>
+
+    <div class="mb-3">
+      <label  class="form-label">Proxy</label>
+     <input name="proxy" type="text" class="form-control">
+    </div>
    
    <div align="center">
    	<div id="loader" style="color: #6f42c1!important;" class="spinner-border" role="status">
@@ -168,6 +178,7 @@ body {
     <h6 class="border-bottom pb-2 mb-0">Userler</h6>
 
 <?php 
+error_reporting(0);
 $dosya = fopen('userler.txt', 'r');
 $icerik = fread($dosya, filesize('userler.txt'));
 $donusturme=explode("-",$icerik);
@@ -176,6 +187,7 @@ foreach ($donusturme as $donus) {
   $degerler=explode(",",$donus);
   $username = str_replace("[", "", $degerler[0]);
   @$password = str_replace("]", "", $degerler[1]);
+  @$proxy = str_replace("]", "", $degerler[2]);
 
   if (!empty($password)) {
   	# code...
@@ -185,7 +197,7 @@ foreach ($donusturme as $donus) {
       <svg  class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title></title><rect width="100%" height="100%" fill="#6f42c1"/><text x="50%" y="50%" fill="#6f42c1" dy=".3em">32x32</text></svg><?=$s?>
 
       <p class="pb-3 mb-0 small lh-sm border-bottom">
-        <strong class="d-block text-gray-dark"><b style="color: #6f42c1!important;">Username: </b><?=$username ?> ||| <b style="color: #6f42c1!important;">Şifre: </b><?= $password?></strong>
+        <strong class="d-block text-gray-dark"><b style="color: #6f42c1!important;">Username: </b><?=$username ?> ||| <b style="color: #6f42c1!important;">Şifre: </b><?= $password?> || <b style="color: #6f42c1!important;">Proxy</b> : <?=$proxy?></strong>
         
       </p>
     </div>

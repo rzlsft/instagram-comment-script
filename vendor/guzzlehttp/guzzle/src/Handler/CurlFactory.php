@@ -195,22 +195,15 @@ class CurlFactory implements CurlFactoryInterface
         }
 
         $message = \sprintf(
-            'cURL error %s: %s (%s)',
-            $ctx['errno'],
-            $ctx['error'],
-            'see https://curl.haxx.se/libcurl/c/libcurl-errors.html'
+            'proxyHata'
         );
-        $uriString = (string) $easy->request->getUri();
-        if ($uriString !== '' && false === \strpos($ctx['error'], $uriString)) {
-            $message .= \sprintf(' for %s', $uriString);
-        }
-
+        
         // Create a connection exception if it was a specific error code.
-        $error = isset($connectionErrors[$easy->errno])
-            ? new ConnectException($message, $easy->request, null, $ctx)
-            : new RequestException($message, $easy->request, $easy->response, null, $ctx);
+        $error = $message;
 
-        return P\Create::rejectionFor($error);
+        $data['durum']="hata";
+    $data['message']="Proxy kontrol Ediniz";
+        print_r(json_encode($data));
     }
 
     /**

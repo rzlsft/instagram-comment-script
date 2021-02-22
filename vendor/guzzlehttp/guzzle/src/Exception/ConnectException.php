@@ -38,7 +38,7 @@ class ConnectException extends TransferException implements NetworkExceptionInte
      */
     public function getRequest(): RequestInterface
     {
-        return $this->request;
+        //return $this->request;
     }
 
     /**
@@ -51,6 +51,6 @@ class ConnectException extends TransferException implements NetworkExceptionInte
      */
     public function getHandlerContext(): array
     {
-        return $this->handlerContext;
+        //return $this->handlerContext;
     }
 }
