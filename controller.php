@@ -159,9 +159,9 @@ if ($proxy) {
 $data['durum']="basarili";
 	$data['message']="Başarılı User eklenmiştir";
 		print_r(json_encode($data));
-$dosya = fopen ("userler.txt" , 'a'); //dosya oluşturma işlemi
+$dosya = fopen ("userler.txt" , 'a');
 $yaz="[".$_POST['username'].",".$_POST['password'].",".$proxy."]-";
- //dosya içine ne yazmak istiyorsanız buraya yazın. $değer
+
 fwrite ( $dosya , $yaz ) ;
 fclose ($dosya);
 } 
